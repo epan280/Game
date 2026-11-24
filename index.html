@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AFTERLIFE GRAMMAR ESCAPE - Heavy Metal TOEFL Edition</title>
+  <style>
+    :root {
+      --bg-dark: #070709;
+      --panel-bg: #111116;
+      --crimson: #dc2626;
+      --crimson-glow: #ef4444;
+      --blood-dark: #7f1d1d;
+      --chrome-light: #f3f4f6;
+      --chrome-mid: #9ca3af;
+      --gold-ember: #f59e0b;
+      --success-metal: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(185, 28, 28, 0.32) 0%, transparent 65%),
+        radial-gradient(circle at 50% 100%, rgba(127, 29, 29, 0.38) 0%, #050507 85%);
+      color: var(--chrome-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #ember-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .arena-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 840px;
+      background: linear-gradient(180deg, #16161d 0%, #0c0c10 100%);
+      border: 2px solid #4b5563;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 
+        0 0 40px rgba(220, 38, 38, 0.35),
+        inset 0 0 25px rgba(0, 0, 0, 0.9);
+    }
+
+    .arena-container::before, .arena-container::after {
+      content: "☠";
+      position: absolute;
+      top: 10px;
+      color: #6b7280;
+      font-size: 1.1rem;
+    }
+    .arena-container::before { left: 14px; }
+    .arena-container::after { right: 14px; }
+
+    /* Audio Bar */
+    .audio-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: #09090c;
+      border: 1px solid #374151;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+
+    .audio-status {
+      font-size: 0.85rem;
+      color: var(--chrome-mid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+    }
+
+    .eq-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+
+    .eq-bar {
+      width: 3px;
+      height: 4px;
+      background: var(--crimson-glow);
+      transition: height 0.1s ease;
+    }
+
+    .eq-playing .eq-bar {
+      animation: eqBounce 0.45s infinite alternate ease-in-out;
+    }
+    .eq-playing .eq-bar:nth-child(2) { animation-delay: 0.15s; }
+    .eq-playing .eq-bar:nth-child(3) { animation-delay: 0.3s; }
+    .eq-playing .eq-bar:nth-child(4) { animation-delay: 0.1s; }
+
+    @keyframes eqBounce {
+      0% { height: 4px; }
+      100% { height: 16px; }
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-audio {
+      background: linear-gradient(180deg, #27272a, #18181b);
+      color: var(--chrome-light);
+      border: 1px solid #52525b;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: 0.2s;
+    }
+
+    .btn-audio:hover {
+      border-color: var(--crimson-glow);
+      color: #fff;
+    }
+
+    .btn-audio.active {
+      background: linear-gradient(180deg, #b91c1c, #7f1d1d);
+      border-color: #f87171;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+    }
+
+    .btn-upload {
+      background: linear-gradient(180deg, #d97706, #92400e);
+      color: #fff;
+      border: 1px solid #fbbf24;
+    }
+
+    input[type="range"] {
+      width: 75px;
+      accent-color: var(--crimson-glow);
+      cursor: pointer;
+    }
+
+    /* Metallic Typography */
+    .chrome-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 6px 0;
+      background: linear-gradient(180deg, #ffffff 0%, #d1d5db 45%, #6b7280 55%, #e5e7eb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.9));
+      text-align: center;
+    }
+
+    .fire-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--crimson-glow);
+      text-shadow: 0 0 12px rgba(239, 68, 68, 0.85);
+      margin-bottom: 18px;
+    }
+
+    .deathbat-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .deathbat-svg {
+      width: 175px;
+      height: auto;
+      filter: drop-shadow(0 0 14px rgba(220, 38, 38, 0.7));
+      animation: pulseSkull 2.8s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseSkull {
+      0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.5)); }
+      100% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(239, 68, 68, 1)); }
+    }
+
+    /* HUD */
+    .metal-hud {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 10px;
+      background: #0a0a0d;
+      border: 1px solid #3f3f46;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .hud-item span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--chrome-mid);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hud-item strong {
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .stage-banner {
+      background: linear-gradient(90deg, transparent, rgba(185, 28, 28, 0.35), transparent);
+      border-top: 1px solid var(--crimson);
+      border-bottom: 1px solid var(--crimson);
+      padding: 8px;
+      text-align: center;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fca5a5;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+    .question-chamber {
+      background: #0d0d12;
+      border: 1px solid #4b5563;
+      border-left: 5px solid var(--crimson-glow);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 1.15rem;
+      line-height: 1.65;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    .blank-slot {
+      display: inline-block;
+      min-width: 95px;
+      border-bottom: 2px dashed var(--crimson-glow);
+      color: var(--gold-ember);
+      font-weight: 800;
+      text-align: center;
+      padding: 0 6px;
+    }
+
+    .options-rack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .options-rack { grid-template-columns: 1fr; }
+      .chrome-title { font-size: 1.6rem; }
+    }
+
+    .metal-opt {
+      background: linear-gradient(180deg, #27272a 0%, #18181b 100%);
+      color: var(--chrome-light);
+      border: 1px solid #52525b;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 4px 0 #09090b;
+    }
+
+    .metal-opt:hover:not(:disabled) {
+      border-color: var(--crimson-glow);
+      background: linear-gradient(180deg, #3f1515 0%, #1f0a0a 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(220, 38, 38, 0.35);
+    }
+
+    .metal-opt.correct {
+      background: linear-gradient(180deg, #065f46 0%, #064e3b 100%);
+      border-color: #34d399;
+      color: #ecfdf5;
+    }
+
+    .metal-opt.wrong {
+      background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+      border-color: #f87171;
+      color: #fef2f2;
+    }
+
+    .btn-metal-main {
+      width: 100%;
+      padding: 15px 22px;
+      border: 1px solid #f87171;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #dc2626 0%, #7f1d1d 100%);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(220, 38, 38, 0.45);
+      transition: 0.2s;
+      margin-top: 14px;
+    }
+
+    .btn-metal-main:hover {
+      background: linear-gradient(180deg, #ef4444 0%, #991b1b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.7);
+    }
+
+    .btn-secondary-metal {
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      color: #d1d5db;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.88rem;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn-secondary-metal:hover {
+      border-color: var(--gold-ember);
+      color: #fff;
+    }
+
+    .analysis-box {
+      margin-top: 16px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #0a0a0e;
+      border: 1px solid #3f3f46;
+      display: none;
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+
+    .analysis-box.show { display: block; }
+    .hidden { display: none !important; }
+
+    /* Modal Grimoire Cheat Sheet */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #121217;
+      border: 2px solid var(--crimson);
+      border-radius: 12px;
+      max-width: 650px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+    }
+
+    .modal-card h3 {
+      color: var(--crimson-glow);
+      border-bottom: 1px solid #374151;
+      padding-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .formula-item {
+      background: #1c1c24;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--gold-ember);
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="ember-canvas"></canvas>
+
+<!-- AUDIO PLAYER: Otomatis memuat Afterlife.mp3 di folder yang sama -->
+<audio id="bg-music" loop preload="auto">
+  <source src="Afterlife.mp3" type="audio/mpeg">
+  <source src="afterlife.mp3" type="audio/mpeg">
+</audio>
+<input type="file" id="mp3-file-input" accept="audio/*" class="hidden" onchange="handleMp3Upload(event)" />
+
+<div class="arena-container">
+  <!-- AUDIO CONTROL BAR -->
+  <div class="audio-bar">
+    <div class="audio-status">
+      <div class="eq-bars" id="eq-visualizer">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+      <span id="track-label">Track: Avenged Sevenfold - Afterlife.mp3</span>
+    </div>
+    <div class="audio-controls">
+      <button class="btn-audio btn-upload" onclick="document.getElementById('mp3-file-input').click()">
+        📁 PILIH MP3
+      </button>
+      <button class="btn-audio" id="toggle-music-btn" onclick="toggleAudio()">
+        🔊 PLAY / PAUSE
+      </button>
+      <input type="range" id="vol-slider" min="0" max="1" step="0.05" value="0.85" onchange="changeVolume(this.value)" title="Volume">
+    </div>
+  </div>
+
+  <!-- START SCREEN -->
+  <div id="start-screen">
+    <div class="deathbat-wrap">
+      <svg class="deathbat-svg" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M85,55 C60,25 25,20 5,40 C22,42 32,52 28,65 C42,58 55,62 60,75 C70,65 80,65 88,70 Z" fill="#991b1b" stroke="#f87171" stroke-width="1.5"/>
+        <path d="M155,55 C180,25 215,20 235,40 C218,42 208,52 212,65 C198,58 185,62 180,75 C170,65 160,65 152,70 Z" fill="#991b1b" stroke="#f87171" stroke-width="1.5"/>
+        <path d="M92,48 C92,28 148,28 148,48 C148,62 140,70 136,76 L136,92 L104,92 L104,76 C100,70 92,62 92,48 Z" fill="#e5e7eb" stroke="#111827" stroke-width="2"/>
+        <ellipse cx="108" cy="52" rx="7" ry="6" fill="#09090b"/>
+        <ellipse cx="132" cy="52" rx="7" ry="6" fill="#09090b"/>
+        <circle cx="108" cy="52" r="2.2" fill="#ef4444"/>
+        <circle cx="132" cy="52" r="2.2" fill="#ef4444"/>
+        <polygon points="120,60 116,69 124,69" fill="#09090b"/>
+        <line x1="110" y1="80" x2="110" y2="91" stroke="#09090b" stroke-width="2"/>
+        <line x1="117" y1="80" x2="117" y2="91" stroke="#09090b" stroke-width="2"/>
+        <line x1="123" y1="80" x2="123" y2="91" stroke="#09090b" stroke-width="2"/>
+        <line x1="130" y1="80" x2="130" y2="91" stroke="#09090b" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <h1 class="chrome-title">Afterlife Grammar Escape</h1>
+    <div class="fire-subtitle">⚔️ Heavy Metal TOEFL Lab Edition ⚔️</div>
+
+    <p style="text-align: center; color: #d1d5db; line-height: 1.6; max-width: 660px; margin: 0 auto 18px;">
+      Pecahkan <strong>15 segel tata bahasa TOEFL (Noun Clause & Conditional Sentences)</strong> dalam 3 ruangan terkunci diiringi lagu <em>Avenged Sevenfold - Afterlife</em>!
+    </p>
+
+    <button class="btn-metal-main" onclick="startGame()">ENTER THE AFTERLIFE 🤘</button>
+    <button class="btn-secondary-metal" onclick="toggleGrimoire(true)">📜 Buka Grimoire Cheat Sheet (Rumus Cepat TOEFL)</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="game-screen" class="hidden">
+    <div class="metal-hud">
+      <div class="hud-item"><span>Room / Stage</span><strong id="hud-stage">STAGE 1</strong></div>
+      <div class="hud-item"><span>Seal Lock</span><strong id="hud-progress">1 / 15</strong></div>
+      <div class="hud-item"><span>Topic</span><strong id="hud-topic" style="color: #fbbf24;">Noun Clause</strong></div>
+      <div class="hud-item"><span>Soul Energy</span><strong id="hud-lives">💀💀💀</strong></div>
+      <div class="hud-item"><span>Score</span><strong id="hud-score" style="color: #f87171;">0</strong></div>
+    </div>
+
+    <div class="stage-banner" id="stage-banner">🔒 STAGE 1: THE CRYPT GATE (BASIC STRUCTURE)</div>
+    <div class="question-chamber" id="question-box"></div>
+    <div class="options-rack" id="options-box"></div>
+    <div class="analysis-box" id="analysis-box"></div>
+
+    <button class="btn-metal-main hidden" id="next-btn" onclick="nextQuestion()">BREAK NEXT SEAL ⚡</button>
+    <button class="btn-secondary-metal" onclick="toggleGrimoire(true)">📜 Cek Rumus Cepat (Cheat Sheet)</button>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="end-screen" class="hidden" style="text-align: center;">
+    <div class="deathbat-wrap">
+      <svg class="deathbat-svg" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M85,55 C60,25 25,20 5,40 C22,42 32,52 28,65 C42,58 55,62 60,75 C70,65 80,65 88,70 Z" fill="#dc2626" stroke="#fca5a5" stroke-width="1.5"/>
+        <path d="M155,55 C180,25 215,20 235,40 C218,42 208,52 212,65 C198,58 185,62 180,75 C170,65 160,65 152,70 Z" fill="#dc2626" stroke="#fca5a5" stroke-width="1.5"/>
+        <path d="M92,48 C92,28 148,28 148,48 C148,62 140,70 136,76 L136,92 L104,92 L104,76 C100,70 92,62 92,48 Z" fill="#f3f4f6"/>
+        <ellipse cx="108" cy="52" rx="7" ry="6" fill="#09090b"/>
+        <ellipse cx="132" cy="52" rx="7" ry="6" fill="#09090b"/>
+        <circle cx="108" cy="52" r="2.5" fill="#ef4444"/>
+        <circle cx="132" cy="52" r="2.5" fill="#ef4444"/>
+        <polygon points="120,60 116,69 124,69" fill="#09090b"/>
+      </svg>
+    </div>
+    <h1 class="chrome-title" id="end-title">ESCAPED FROM AFTERLIFE!</h1>
+    <div class="fire-subtitle" id="end-score-text">FINAL SCORE: 150 / 150</div>
+    <p id="end-desc" style="color: #d1d5db; max-width: 580px; margin: 0 auto 20px; line-height: 1.6;"></p>
+    <button class="btn-metal-main" onclick="startGame()">PLAY AGAIN 🤘</button>
+  </div>
+</div>
+
+<!-- MODAL CHEAT SHEET -->
+<div class="modal-overlay hidden" id="grimoire-modal">
+  <div class="modal-card">
+    <h3>📜 Grimoire Cheat Sheet: TOEFL Grammar</h3>
+    <div class="formula-item">
+      <strong>1. Noun Clause (Klausa Benda)</strong><br>
+      • Susunan wajib <strong>Statement (Connector + S + V)</strong>, BUKAN bentuk tanya (<em>what the theory is</em>, bukan <em>what is the theory</em>).<br>
+      • Sebagai Subjek kalimat selalu dianggap <strong>Tunggal (Singular Verb)</strong>.<br>
+      • Gunakan <strong>Whether</strong> (bukan <em>If</em>) jika berpasangan dengan <em>"...or not"</em>.
+    </div>
+    <div class="formula-item">
+      <strong>2. Conditional Sentences (Kalimat Pengandaian)</strong><br>
+      • <strong>Type 1 (Future Real):</strong> If + S + V1, S + will + V1.<br>
+      • <strong>Type 2 (Present Unreal):</strong> If + S + V2/were, S + would + V1.<br>
+      • <strong>Type 3 (Past Unreal):</strong> If + S + had + V3, S + would have + V3.<br>
+      • <strong>TOEFL Trap (Inversi tanpa 'If'):</strong> <em>Had + S + V3</em> (Type 3) atau <em>Should + S + V1</em> (Type 1).
+    </div>
+    <button class="btn-metal-main" onclick="toggleGrimoire(false)">TUTUP GRIMOIRE ✖</button>
+  </div>
+</div>
+
+<script>
+  // =========================================================================
+  // 1. AUDIO ENGINE (LAGU AFTERLIFE.MP3 + EFEK SUARA GITAR SYNTH)
+  // =========================================================================
+  const bgMusic = document.getElementById("bg-music");
+  let sfxCtx = null;
+
+  function initSfxContext() {
+    if (!sfxCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      sfxCtx = new AudioContext();
+    }
+    if (sfxCtx.state === "suspended") {
+      sfxCtx.resume();
+    }
+  }
+
+  function handleMp3Upload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const fileURL = URL.createObjectURL(file);
+    bgMusic.src = fileURL;
+    bgMusic.volume = document.getElementById("vol-slider").value;
+    bgMusic.play().then(() => {
+      updateAudioUI(true, "Playing: " + file.name);
+    });
+  }
+
+  function tryAutoPlayMusic() {
+    bgMusic.volume = document.getElementById("vol-slider").value;
+    bgMusic.play().then(() => {
+      updateAudioUI(true, "Playing: Avenged Sevenfold - Afterlife");
+    }).catch(() => {
+      updateAudioUI(false, "Klik '📁 PILIH MP3' jika file belum di folder yang sama");
+    });
+  }
+
+  function toggleAudio() {
+    initSfxContext();
+    if (!bgMusic.paused) {
+      bgMusic.pause();
+      updateAudioUI(false, "Backsound Dijeda (Paused)");
+    } else {
+      bgMusic.play().then(() => {
+        updateAudioUI(true, "Playing: Avenged Sevenfold - Afterlife");
+      }).catch(() => {
+        document.getElementById('mp3-file-input').click();
+      });
+    }
+  }
+
+  function changeVolume(val) {
+    bgMusic.volume = val;
+  }
+
+  function updateAudioUI(playing, labelText) {
+    const btn = document.getElementById("toggle-music-btn");
+    const eq = document.getElementById("eq-visualizer");
+    const label = document.getElementById("track-label");
+
+    if (playing) {
+      btn.textContent = "🔊 PAUSE";
+      btn.classList.add("active");
+      eq.classList.add("eq-playing");
+    } else {
+      btn.textContent = "🔇 PLAY";
+      btn.classList.remove("active");
+      eq.classList.remove("eq-playing");
+    }
+    if (labelText) label.textContent = labelText;
+  }
+
+  function playMetalSfx(isCorrect) {
+    try {
+      initSfxContext();
+      const now = sfxCtx.currentTime;
+      const osc = sfxCtx.createOscillator();
+      const gain = sfxCtx.createGain();
+      osc.type = "sawtooth";
+
+      if (isCorrect) {
+        osc.frequency.setValueAtTime(293.66, now);
+        osc.frequency.setValueAtTime(440.00, now + 0.12);
+        osc.frequency.setValueAtTime(587.33, now + 0.24);
+      } else {
+        osc.frequency.setValueAtTime(146.83, now);
+        osc.frequency.linearRampToValueAtTime(73.42, now + 0.35);
+      }
+
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+      osc.connect(gain);
+      gain.connect(sfxCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.46);
+    } catch (e) {}
+  }
+
+  // =========================================================================
+  // 2. BANK SOAL TOEFL (15 SOAL ORISINAL - 3 STAGE)
+  // =========================================================================
+  const escapeQuestions = [
+    // STAGE 1: THE CRYPT GATE (EASY)
+    {
+      stage: "STAGE 1: THE CRYPT GATE",
+      topic: "Noun Clause",
+      prompt: "The ancient scroll reveals <span class='blank-slot'>_____</span> hidden beneath the cathedral.",
+      options: ["where the treasure is", "where is the treasure", "where the treasure", "is where the treasure"],
+      answer: 0,
+      explanation: "Setelah verb 'reveals' diperlukan Noun Clause dengan urutan Statement (Connector + Subject + Verb): 'where the treasure is'."
+    },
+    {
+      stage: "STAGE 1: THE CRYPT GATE",
+      topic: "Conditional Sentences",
+      prompt: "If the alchemist <span class='blank-slot'>_____</span> the formula tonight, the experiment will succeed.",
+      options: ["completes", "completed", "will complete", "had completed"],
+      answer: 0,
+      explanation: "Conditional Type 1 (Future Real): If + Simple Present ('completes'), Main Clause + will + V1 ('will succeed')."
+    },
+    {
+      stage: "STAGE 1: THE CRYPT GATE",
+      topic: "Noun Clause",
+      prompt: "<span class='blank-slot'>_____</span> the expedition team discovered in the cavern amazed the entire university.",
+      options: ["What", "That which", "Which", "Where"],
+      answer: 0,
+      explanation: "Connector 'What' bermakna 'the thing that' dan berfungsi sebagai objek dari 'discovered' sekaligus membentuk subjek kalimat."
+    },
+    {
+      stage: "STAGE 1: THE CRYPT GATE",
+      topic: "Conditional Sentences",
+      prompt: "If I <span class='blank-slot'>_____</span> the lead engineer on this project, I would redesign the reactor core.",
+      options: ["were", "was", "am", "have been"],
+      answer: 0,
+      explanation: "Pada Conditional Type 2 (Unreal Present), bentuk 'to be' untuk semua subjek (termasuk 'I') adalah 'were'."
+    },
+    {
+      stage: "STAGE 1: THE CRYPT GATE",
+      topic: "Noun Clause",
+      prompt: "No one could explain <span class='blank-slot'>_____</span> the generator suddenly shut down.",
+      options: ["why", "what", "whom", "whose"],
+      answer: 0,
+      explanation: "Kalimat membutuhkan keterangan alasan ('why') untuk menghubungkan klausa 'the generator suddenly shut down'."
+    },
+
+    // STAGE 2: CHAMBER OF CHAINS (MEDIUM)
+    {
+      stage: "STAGE 2: CHAMBER OF CHAINS",
+      topic: "Conditional Sentences",
+      prompt: "If the warning signal had been detected earlier, the crew <span class='blank-slot'>_____</span> the disaster.",
+      options: ["would have prevented", "will prevent", "would prevent", "had prevented"],
+      answer: 0,
+      explanation: "Conditional Type 3 (Unreal Past): If + Past Perfect ('had been detected'), Main Clause + would have + V3 ('would have prevented')."
+    },
+    {
+      stage: "STAGE 2: CHAMBER OF CHAINS",
+      topic: "Noun Clause",
+      prompt: "That the geomagnetic poles shift over millennia <span class='blank-slot'>_____</span> supported by geological evidence.",
+      options: ["is", "are", "were", "have been"],
+      answer: 0,
+      explanation: "Subjek kalimat berupa Noun Clause ('That the geomagnetic poles shift...') selalu dihitung tunggal (singular), sehingga memakai 'is'."
+    },
+    {
+      stage: "STAGE 2: CHAMBER OF CHAINS",
+      topic: "Conditional Sentences",
+      prompt: "The security vault will remain sealed unless the commander <span class='blank-slot'>_____</span> the override code.",
+      options: ["enters", "will enter", "entered", "had entered"],
+      answer: 0,
+      explanation: "'Unless' bermakna 'if... not' (Conditional Type 1), sehingga klausa setelahnya menggunakan Simple Present ('enters')."
+    },
+    {
+      stage: "STAGE 2: CHAMBER OF CHAINS",
+      topic: "Noun Clause",
+      prompt: "The researchers are investigating <span class='blank-slot'>_____</span> causes the metallic alloy to corrode rapidly.",
+      options: ["what", "that", "why", "how"],
+      answer: 0,
+      explanation: "'What' berfungsi ganda sebagai Connector sekaligus Subject bagi kata kerja 'causes' dalam Noun Clause."
+    },
+    {
+      stage: "STAGE 2: CHAMBER OF CHAINS",
+      topic: "Conditional Sentences",
+      prompt: "If solar radiation <span class='blank-slot'>_____</span> unfiltered, life on Earth could not exist.",
+      options: ["reached", "reaches", "has reached", "will reach"],
+      answer: 0,
+      explanation: "Main clause menggunakan 'could not exist' (Type 2 Unreal Present), maka If-clause memakai Simple Past ('reached')."
+    },
+
+    // STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)
+    {
+      stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
+      topic: "Conditional Sentences",
+      prompt: "<span class='blank-slot'>_____</span> the backup turbine been activated, the entire facility would have survived the blackout.",
+      options: ["Had", "If", "Should", "Were"],
+      answer: 0,
+      explanation: "TOEFL Trap (Inversi Conditional Type 3): Kata 'If' dihilangkan dan 'Had' dipindah ke depan subjek -> 'Had the backup turbine been...'."
+    },
+    {
+      stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
+      topic: "Noun Clause",
+      prompt: "The council has not decided <span class='blank-slot'>_____</span> or not to authorize the deep-sea excavation.",
+      options: ["whether", "if", "that", "which"],
+      answer: 0,
+      explanation: "TOEFL Trap: Dalam tata bahasa formal TOEFL, frasa '...or not' hanya boleh dipasangkan dengan 'whether', bukan 'if'."
+    },
+    {
+      stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
+      topic: "Conditional Sentences",
+      prompt: "<span class='blank-slot'>_____</span> any unauthorized personnel attempt to breach the gate, the alarm will trigger instantly.",
+      options: ["Should", "Had", "Were", "Did"],
+      answer: 0,
+      explanation: "TOEFL Trap (Inversi Conditional Type 1): 'Should + Subject + V1 (bare infinitive)' menggantikan 'If + Subject + V1'."
+    },
+    {
+      stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
+      topic: "Noun Clause",
+      prompt: "The final outcome depends entirely on <span class='blank-slot'>_____</span> the data is interpreted.",
+      options: ["how accurately", "how accurate is", "that accurately", "what accurate"],
+      answer: 0,
+      explanation: "Setelah preposisi 'on', Noun Clause menggunakan pola: how + adverb ('accurately') + Subject + Verb ('the data is interpreted')."
+    },
+    {
+      stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
+      topic: "Conditional Sentences",
+      prompt: "Had the architect followed the original blueprint, the bridge <span class='blank-slot'>_____</span> standing today.",
+      options: ["would still be", "will still be", "would have still", "is still"],
+      answer: 0,
+      explanation: "TOEFL Trap (Mixed Conditional): Kondisi lampau ('Had... followed' - Type 3) berdampak pada kondisi sekarang ('today' -> 'would still be' - Type 2)."
+    }
+  ];
+
+  let currentIdx = 0;
+  let score = 0;
+  let lives = 3;
+
+  function startGame() {
+    initSfxContext();
+    tryAutoPlayMusic();
+    currentIdx = 0;
+    score = 0;
+    lives = 3;
+
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.add("hidden");
+    document.getElementById("game-screen").classList.remove("hidden");
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    const q = escapeQuestions[currentIdx];
+
+    document.getElementById("hud-stage").textContent = `STAGE ${Math.floor(currentIdx / 5) + 1}`;
+    document.getElementById("hud-progress").textContent = `${currentIdx + 1} / ${escapeQuestions.length}`;
+    document.getElementById("hud-topic").textContent = q.topic;
+    document.getElementById("hud-lives").textContent = "💀".repeat(lives) + "🖤".repeat(3 - lives);
+    document.getElementById("hud-score").textContent = score;
+    document.getElementById("stage-banner").textContent = `🔒 ${q.stage}`;
+
+    document.getElementById("question-box").innerHTML = q.prompt;
+
+    const optionsBox = document.getElementById("options-box");
+    optionsBox.innerHTML = "";
+
+    const analysisBox = document.getElementById("analysis-box");
+    analysisBox.className = "analysis-box";
+    analysisBox.innerHTML = "";
+    document.getElementById("next-btn").classList.add("hidden");
+
+    q.options.forEach((optText, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "metal-opt";
+      btn.textContent = `${String.fromCharCode(65 + idx)}. ${optText}`;
+      btn.onclick = () => checkAnswer(idx, btn);
+      optionsBox.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selectedIdx, btnEl) {
+    const q = escapeQuestions[currentIdx];
+    const allBtns = document.querySelectorAll(".metal-opt");
+    allBtns.forEach(b => b.disabled = true);
+
+    const blankSlot = document.querySelector(".blank-slot");
+    if (blankSlot) blankSlot.textContent = q.options[q.answer];
+
+    const analysisBox = document.getElementById("analysis-box");
+
+    if (selectedIdx === q.answer) {
+      score += 10;
+      btnEl.classList.add("correct");
+      playMetalSfx(true);
+      analysisBox.style.borderColor = "#10b981";
+      analysisBox.innerHTML = `<strong style="color:#34d399;">⚡ SEAL BROKEN! (+10 PTS)</strong><br>${q.explanation}`;
+    } else {
+      lives--;
+      btnEl.classList.add("wrong");
+      allBtns[q.answer].classList.add("correct");
+      playMetalSfx(false);
+      analysisBox.style.borderColor = "#ef4444";
+      analysisBox.innerHTML = `<strong style="color:#f87171;">💥 TRAP TRIGGERED! (-1 SOUL)</strong><br>Jawaban tepat: <strong>${q.options[q.answer]}</strong>.<br>${q.explanation}`;
+    }
+
+    document.getElementById("hud-lives").textContent = "💀".repeat(lives) + "🖤".repeat(3 - lives);
+    document.getElementById("hud-score").textContent = score;
+    analysisBox.classList.add("show");
+    document.getElementById("next-btn").classList.remove("hidden");
+  }
+
+  function nextQuestion() {
+    if (lives <= 0 || currentIdx + 1 >= escapeQuestions.length) {
+      endGame();
+    } else {
+      currentIdx++;
+      loadQuestion();
+    }
+  }
+
+  function endGame() {
+    document.getElementById("game-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.remove("hidden");
+
+    const maxScore = escapeQuestions.length * 10;
+    document.getElementById("end-score-text").textContent = `FINAL SCORE: ${score} / ${maxScore}`;
+
+    if (lives <= 0) {
+      document.getElementById("end-title").textContent = "TRAPPED IN AFTERLIFE!";
+      document.getElementById("end-desc").textContent = "Energi jiwamu habis sebelum gerbang terakhir terbuka. Buka Grimoire Cheat Sheet untuk mempelajari pola TOEFL Traps dan coba lagi!";
+    } else if (score >= 120) {
+      document.getElementById("end-title").textContent = "MASTER OF THE AFTERLIFE!";
+      document.getElementById("end-desc").textContent = "Luar biasa! Kamu menghancurkan seluruh segel Noun Clause & Conditional Sentences dengan presisi tinggi.";
+    } else {
+      document.getElementById("end-title").textContent = "SURVIVED THE SANCTUM!";
+      document.getElementById("end-desc").textContent = "Kamu berhasil lolos dari ruangan, namun masih ada beberapa segel yang bisa disempurnakan!";
+    }
+  }
+
+  function toggleGrimoire(show) {
+    const modal = document.getElementById("grimoire-modal");
+    if (show) modal.classList.remove("hidden");
+    else modal.classList.add("hidden");
+  }
+
+  // =========================================================================
+  // 3. EMBER / FIRE PARTICLES BACKGROUND
+  // =========================================================================
+  const canvas = document.getElementById("ember-canvas");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  for (let i = 0; i < 45; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.5 + 0.8,
+      vy: -(Math.random() * 1.1 + 0.4),
+      vx: (Math.random() - 0.5) * 0.6,
+      alpha: Math.random() * 0.8 + 0.2
+    });
+  }
+
+  function animateEmbers() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < 0) {
+        p.y = canvas.height;
+        p.x = Math.random() * canvas.width;
+      }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(239, 68, 68, ${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(animateEmbers);
+  }
+  animateEmbers();
+</script>
+
+</body>
+</html>
