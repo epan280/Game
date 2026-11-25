@@ -634,7 +634,7 @@
   }
 
   // =========================================================================
-  // 2. BANK SOAL TOEFL (15 SOAL ORISINAL - 3 STAGE)
+  // 2. BANK SOAL TOEFL (15 SOAL ORISINAL - JAWABAN BENAR ACAK A/B/C/D)
   // =========================================================================
   const escapeQuestions = [
     // STAGE 1: THE CRYPT GATE (EASY)
@@ -642,24 +642,24 @@
       stage: "STAGE 1: THE CRYPT GATE",
       topic: "Noun Clause",
       prompt: "The ancient scroll reveals <span class='blank-slot'>_____</span> hidden beneath the cathedral.",
-      options: ["where the treasure is", "where is the treasure", "where the treasure", "is where the treasure"],
-      answer: 0,
+      options: ["where is the treasure", "where the treasure", "where the treasure is", "is where the treasure"],
+      answer: 2, // C
       explanation: "Setelah verb 'reveals' diperlukan Noun Clause dengan urutan Statement (Connector + Subject + Verb): 'where the treasure is'."
     },
     {
       stage: "STAGE 1: THE CRYPT GATE",
       topic: "Conditional Sentences",
       prompt: "If the alchemist <span class='blank-slot'>_____</span> the formula tonight, the experiment will succeed.",
-      options: ["completes", "completed", "will complete", "had completed"],
-      answer: 0,
+      options: ["completed", "completes", "will complete", "had completed"],
+      answer: 1, // B
       explanation: "Conditional Type 1 (Future Real): If + Simple Present ('completes'), Main Clause + will + V1 ('will succeed')."
     },
     {
       stage: "STAGE 1: THE CRYPT GATE",
       topic: "Noun Clause",
       prompt: "<span class='blank-slot'>_____</span> the expedition team discovered in the cavern amazed the entire university.",
-      options: ["What", "That which", "Which", "Where"],
-      answer: 0,
+      options: ["That which", "Which", "Where", "What"],
+      answer: 3, // D
       explanation: "Connector 'What' bermakna 'the thing that' dan berfungsi sebagai objek dari 'discovered' sekaligus membentuk subjek kalimat."
     },
     {
@@ -667,15 +667,15 @@
       topic: "Conditional Sentences",
       prompt: "If I <span class='blank-slot'>_____</span> the lead engineer on this project, I would redesign the reactor core.",
       options: ["were", "was", "am", "have been"],
-      answer: 0,
+      answer: 0, // A
       explanation: "Pada Conditional Type 2 (Unreal Present), bentuk 'to be' untuk semua subjek (termasuk 'I') adalah 'were'."
     },
     {
       stage: "STAGE 1: THE CRYPT GATE",
       topic: "Noun Clause",
       prompt: "No one could explain <span class='blank-slot'>_____</span> the generator suddenly shut down.",
-      options: ["why", "what", "whom", "whose"],
-      answer: 0,
+      options: ["what", "whom", "why", "whose"],
+      answer: 2, // C
       explanation: "Kalimat membutuhkan keterangan alasan ('why') untuk menghubungkan klausa 'the generator suddenly shut down'."
     },
 
@@ -684,16 +684,16 @@
       stage: "STAGE 2: CHAMBER OF CHAINS",
       topic: "Conditional Sentences",
       prompt: "If the warning signal had been detected earlier, the crew <span class='blank-slot'>_____</span> the disaster.",
-      options: ["would have prevented", "will prevent", "would prevent", "had prevented"],
-      answer: 0,
+      options: ["will prevent", "would have prevented", "would prevent", "had prevented"],
+      answer: 1, // B
       explanation: "Conditional Type 3 (Unreal Past): If + Past Perfect ('had been detected'), Main Clause + would have + V3 ('would have prevented')."
     },
     {
       stage: "STAGE 2: CHAMBER OF CHAINS",
       topic: "Noun Clause",
       prompt: "That the geomagnetic poles shift over millennia <span class='blank-slot'>_____</span> supported by geological evidence.",
-      options: ["is", "are", "were", "have been"],
-      answer: 0,
+      options: ["are", "were", "have been", "is"],
+      answer: 3, // D
       explanation: "Subjek kalimat berupa Noun Clause ('That the geomagnetic poles shift...') selalu dihitung tunggal (singular), sehingga memakai 'is'."
     },
     {
@@ -701,23 +701,23 @@
       topic: "Conditional Sentences",
       prompt: "The security vault will remain sealed unless the commander <span class='blank-slot'>_____</span> the override code.",
       options: ["enters", "will enter", "entered", "had entered"],
-      answer: 0,
+      answer: 0, // A
       explanation: "'Unless' bermakna 'if... not' (Conditional Type 1), sehingga klausa setelahnya menggunakan Simple Present ('enters')."
     },
     {
       stage: "STAGE 2: CHAMBER OF CHAINS",
       topic: "Noun Clause",
       prompt: "The researchers are investigating <span class='blank-slot'>_____</span> causes the metallic alloy to corrode rapidly.",
-      options: ["what", "that", "why", "how"],
-      answer: 0,
+      options: ["that", "why", "what", "how"],
+      answer: 2, // C
       explanation: "'What' berfungsi ganda sebagai Connector sekaligus Subject bagi kata kerja 'causes' dalam Noun Clause."
     },
     {
       stage: "STAGE 2: CHAMBER OF CHAINS",
       topic: "Conditional Sentences",
       prompt: "If solar radiation <span class='blank-slot'>_____</span> unfiltered, life on Earth could not exist.",
-      options: ["reached", "reaches", "has reached", "will reach"],
-      answer: 0,
+      options: ["reaches", "reached", "has reached", "will reach"],
+      answer: 1, // B
       explanation: "Main clause menggunakan 'could not exist' (Type 2 Unreal Present), maka If-clause memakai Simple Past ('reached')."
     },
 
@@ -726,24 +726,24 @@
       stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
       topic: "Conditional Sentences",
       prompt: "<span class='blank-slot'>_____</span> the backup turbine been activated, the entire facility would have survived the blackout.",
-      options: ["Had", "If", "Should", "Were"],
-      answer: 0,
+      options: ["If", "Should", "Were", "Had"],
+      answer: 3, // D
       explanation: "TOEFL Trap (Inversi Conditional Type 3): Kata 'If' dihilangkan dan 'Had' dipindah ke depan subjek -> 'Had the backup turbine been...'."
     },
     {
       stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
       topic: "Noun Clause",
       prompt: "The council has not decided <span class='blank-slot'>_____</span> or not to authorize the deep-sea excavation.",
-      options: ["whether", "if", "that", "which"],
-      answer: 0,
+      options: ["if", "whether", "that", "which"],
+      answer: 1, // B
       explanation: "TOEFL Trap: Dalam tata bahasa formal TOEFL, frasa '...or not' hanya boleh dipasangkan dengan 'whether', bukan 'if'."
     },
     {
       stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
       topic: "Conditional Sentences",
       prompt: "<span class='blank-slot'>_____</span> any unauthorized personnel attempt to breach the gate, the alarm will trigger instantly.",
-      options: ["Should", "Had", "Were", "Did"],
-      answer: 0,
+      options: ["Had", "Were", "Should", "Did"],
+      answer: 2, // C
       explanation: "TOEFL Trap (Inversi Conditional Type 1): 'Should + Subject + V1 (bare infinitive)' menggantikan 'If + Subject + V1'."
     },
     {
@@ -751,15 +751,15 @@
       topic: "Noun Clause",
       prompt: "The final outcome depends entirely on <span class='blank-slot'>_____</span> the data is interpreted.",
       options: ["how accurately", "how accurate is", "that accurately", "what accurate"],
-      answer: 0,
+      answer: 0, // A
       explanation: "Setelah preposisi 'on', Noun Clause menggunakan pola: how + adverb ('accurately') + Subject + Verb ('the data is interpreted')."
     },
     {
       stage: "STAGE 3: AFTERLIFE SANCTUM (TOEFL TRAPS)",
       topic: "Conditional Sentences",
       prompt: "Had the architect followed the original blueprint, the bridge <span class='blank-slot'>_____</span> standing today.",
-      options: ["would still be", "will still be", "would have still", "is still"],
-      answer: 0,
+      options: ["will still be", "would have still", "is still", "would still be"],
+      answer: 3, // D
       explanation: "TOEFL Trap (Mixed Conditional): Kondisi lampau ('Had... followed' - Type 3) berdampak pada kondisi sekarang ('today' -> 'would still be' - Type 2)."
     }
   ];
@@ -832,7 +832,7 @@
       allBtns[q.answer].classList.add("correct");
       playMetalSfx(false);
       analysisBox.style.borderColor = "#ef4444";
-      analysisBox.innerHTML = `<strong style="color:#f87171;">💥 TRAP TRIGGERED! (-1 SOUL)</strong><br>Jawaban tepat: <strong>${q.options[q.answer]}</strong>.<br>${q.explanation}`;
+      analysisBox.innerHTML = `<strong style="color:#f87171;">💥 TRAP TRIGGERED! (-1 SOUL)</strong><br>Jawaban tepat: <strong>${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}</strong>.<br>${q.explanation}`;
     }
 
     document.getElementById("hud-lives").textContent = "💀".repeat(lives) + "🖤".repeat(3 - lives);
